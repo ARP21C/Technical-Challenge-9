@@ -3,6 +3,7 @@ let collectibles = [];
 let enemy;
 let walls = [];
 let gameOver = false;
+let win = false; // Track win state
 
 
 function setup() {
@@ -78,12 +79,26 @@ function draw() {
       enemy.velocity.y = 0; // Stop enemy movement
 	  }
 
-	} else {
+	  // Check for win condition
+	  if (collectibles.length === 0) {
+		win = true; // Set win state
+	  }
+	} 
+
+	if (gameOver) {
 		//game over text
 		textSize (50);
 		fill(255, 0, 0);
 		textAlign (CENTER,CENTER);
 		text("YOU LOSE");
 	  }
+	}
+
+	// Win state
+	if (win) {
+		textSize(50);
+		fill(0, 255, 0);
+		textAlign(CENTER, CENTER);
+		text("YOU WIN", width / 2, height / 2); // Center the text
+	  }
 	
-}
