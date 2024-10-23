@@ -2,6 +2,7 @@ let player;
 let collectibles = [];
 let enemy;
 let walls = [];
+let gameOver = false;
 
 
 function setup() {
@@ -9,6 +10,7 @@ function setup() {
 
 	//create player
 	player = new Sprite();
+	
 
 	//create collectibles
 	for (let i = 0; i < 10; i++) {
@@ -19,16 +21,18 @@ function setup() {
 
 	  //create enemy sprite
 	  enemy = new Sprite(15, 15, 60, 60); // Place enemy in top-left corner
+	  
 
 	   // Set initial random velocity for the enemy
- 	 enemy.velocity.x = random(-4, 4);
- 	 enemy.velocity.y = random(-4, 4);
+ 	 enemy.velocity.x = random(-1, 1);
+ 	 enemy.velocity.y = random(-1, 1);
 
 }
 
 function draw() {
 	background(255);
 
+	if (!gameOver) {
 	//control player w mouse keys
 	player.speed = 3;
 	
@@ -65,13 +69,21 @@ function draw() {
 	  
 
 	}
-
+  }
 	// Check for collision with enemy
 	if (player.overlap(enemy)) {
-		noLoop(); // Stop the game loop
-		textSize(32);
-		fill(255);
-		text("Game Over! Score: " + score, 50, height / 2);
+		gameOver = true;
+		player.speed = 0; //stop player movement
+		enemy.velocity.x = 0; // Stop enemy movement
+      enemy.velocity.y = 0; // Stop enemy movement
+	  }
+
+	} else {
+		//game over text
+		textSize (50);
+		fill(255, 0, 0);
+		textAlign (CENTER,CENTER);
+		text("YOU LOSE");
 	  }
 	
-}}
+}
